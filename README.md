@@ -1,8 +1,8 @@
 # selenium-ecotime
 
-selenium-ecotime is a command line interface (CLI) tool to rapidly enhance the speed at which Eco-Time can be logged per day. Written in Java, using the Selenium franeworkfor the browser automation.
+selenium-ecotime is a command line interface (CLI) tool to rapidly enhance the speed at which [UC San Diego Eco-Time](http://ecotimecampus.ucsd.edu/) can be logged per day. Written in Java, using the Selenium franeworkfor the browser automation.
 
-**Fun fact:** Eco-Time is set up in an interesting way from the HTML structure, using frames to support nested browsing, but from the user perspective, seems like a relatively cohesive experience. It made for a fun learning experience alongside with familiarizing myself with Xpath selectors, and the importance of switching frames properly in Selenium.
+**Fun fact:** UC San Diego Eco-Time is set up in an interesting way from the HTML structure, using frames to support nested browsing, but from the user perspective, seems like a relatively cohesive experience. It made for a fun learning experience alongside with familiarizing myself with Xpath selectors, and the importance of switching frames properly in Selenium.
 
 **Features to be considered for the future would be:** more robust safe-guards for formatting, proper user setting storage, enhanced CLI dialogue, option to clock in time for multiple dates at once, option to complete time-sheet, etc.
 
@@ -30,7 +30,7 @@ Instead of doing something like "jdoe@ucsd.edu", just set the variable to **"jdo
 
 > ### Where can I view my job code?
 
-When you normally look through Ecotime on your timesheets, select any of the "Select Position ID" drop-down menus, and look for the number that's after "Job Code". 
+When you normally look through UC San Diego Ecotime on your timesheets, select any of the "Select Position ID" drop-down menus, and look for the number that's after "Job Code". 
 
 Alternatively, go to [UCSD Title and Pay](http://hr.ucsd.edu/tpp/index.aspx), and look up your position by job title. In the search results that show up, you'll see the corresponding title code, aka your job code.
 
