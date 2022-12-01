@@ -7,8 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.netty.handler.codec.socksx.v5.Socks5PasswordAuthRequest;
-
 public class App {
     public static void main(String[] args) throws Exception {
         // 1. Go to Eco-time
@@ -16,14 +14,14 @@ public class App {
         driver.get("http://ecotimecampus.ucsd.edu/");
     
         // 2. Enter in user credentials
-        driver.findElement(By.id("ssousername")).sendKeys(""); // add username
-        driver.findElement(By.id("ssopassword")).sendKeys(""); // add password
+        driver.findElement(By.id("ssousername")).sendKeys(Settings.user);
+        driver.findElement(By.id("ssopassword")).sendKeys(Settings.pass);
 
         // 3. Click "Login"
         driver.findElement(By.xpath("//*[contains(text(), 'Login')]")).click();
 
         // [MANUAL REQUIRED] Tap 'Yes' on phone for 2FA. Set up wait period.
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Settings.waitFor2FA));
         WebElement topFrame = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("frmTop")));
 
         // 4. Switch to the frame "frmTop"
@@ -42,12 +40,31 @@ public class App {
         WebElement botFrame = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("frmBottom")));
         driver.switchTo().frame(botFrame);
 
-        // 8. Click on the a tag that contains user input param "MM/DD" - doesn't work. WIP
-        driver.findElement(By.xpath("//a[contains(.,'12/01')]")).click();
+        // 8. Click on the a tag that contains "MM/DD"
+        driver.findElement(By.partialLinkText(Settings.date)).click();
 
-        // 9. Enter in the time in and time out, according to user settings
-        //driver.findElement(By.name("cbInHrs1")).sendKeys("6");
+        // 9. Enter in the time in and time out
+        driver.findElement(By.name("cbInHrs1")).sendKeys(Settings.inHour);
+        driver.findElement(By.name("cbInMin1")).sendKeys(Settings.inMinute);
+        driver.findElement(By.name("cbInAP1")).sendKeys(Settings.inAP);
+        driver.findElement(By.name("cbOutHrs1")).sendKeys(Settings.outHour);
+        driver.findElement(By.name("cbOutMin1")).sendKeys(Settings.outMinute);
+        driver.findElement(By.name("cbOutAP1")).sendKeys(Settings.outAP);
 
-        System.out.println("no dice");
+        // 10. Enter in job code, according to user settings
+        driver.findElement(By.xpath("//select[@id='cbPos1']/option[contains(text(),"+Settings.jobCode+")]")).click();
+
+        // 11. Wait to let pay code refresh, then enter it in
+        Thread.sleep(Settings.waitForSelect); // Increase value if it fails here.
+        driver.findElement(By.xpath("//select[@id='cbCode1']/option[text() = "+Settings.payCode+"]")).click();
+
+        // 12. Click "Save" at the top right
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(topFrame);
+        driver.findElement(By.xpath("//img[@title='Save']")).click();
+
+        // 13. Close browser & print completion message
+        driver.close();
+        System.out.println("Eco-Time for " + Settings.date + " from " + Settings.inTime + " to " + Settings.outTime + " saved.");
     }
 }
