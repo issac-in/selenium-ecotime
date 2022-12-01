@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         // 1. Go to Eco-time
         WebDriver driver = new ChromeDriver();
         driver.get("http://ecotimecampus.ucsd.edu/");
@@ -56,7 +56,7 @@ public class App {
 
         // 11. Wait to let pay code refresh, then enter it in
         Thread.sleep(Settings.waitForSelect); // Increase value if it fails here.
-        driver.findElement(By.xpath("//select[@id='cbCode1']/option[text() = "+Settings.payCode+"]")).click();
+        driver.findElement(By.xpath("//select[@id='cbCode1']/option[text() = '"+Settings.payCode+"']")).click();
 
         // 12. Click "Save" at the top right
         driver.switchTo().defaultContent();
